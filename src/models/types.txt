@@ -1,0 +1,18 @@
+patient
+- id 
+- fullname: string
+- phone: string
+- avatar: string
+
+price
+- id
+- diagnos: string
+- price: string
+
+appointment
+- id
+- dent_number: number
+- time: string
+- date: string
+- patient_id
+- diagnos_id
