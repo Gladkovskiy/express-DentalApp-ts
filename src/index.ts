@@ -22,6 +22,7 @@ app.use(error)
 
 const start = async () => {
   try {
+    // connect DB
     await connect()
     // start the Express server
     app.listen(port, () => {

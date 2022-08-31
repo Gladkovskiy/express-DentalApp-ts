@@ -10,17 +10,19 @@ export interface IPatient {
   fullname: string
   avatar: string
   phone: string
+  _id: Types.ObjectId
 }
 
 export interface IService {
   diagnos: string
   price: string
+  _id: Types.ObjectId
 }
 
 export interface IAppointment {
   dentNumber: number
-  time: string
-  date: string
-  priceId: Types.ObjectId
-  patientId: Types.ObjectId
+  date: number
+  service: Types.ObjectId
+  patient: Types.ObjectId
+  _id: Types.ObjectId
 }
