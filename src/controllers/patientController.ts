@@ -6,6 +6,9 @@ import {TypedRequestBody, TypedRequestQuery} from '../types/express'
 import {IPatient} from '../types/models'
 import {IFindPatient} from '../types/response'
 import {errorMsg} from '../validation/errorsMessage'
+import {v4 as uuidv4} from 'uuid'
+import {UploadedFile} from 'express-fileupload'
+import path from 'path'
 
 export const addPatient = async (
   req: TypedRequestBody<IPatient>,
@@ -18,8 +21,12 @@ export const addPatient = async (
       return next(ApiError.badRequest(errorMsg(errors)))
     }
 
-    const {avatar, fullname, phone} = req.body
-    await Patient.create({avatar, fullname, phone})
+    const {fullname, phone} = req.body
+    const img = req.files.avatar as UploadedFile
+    const fileName = uuidv4() + 'jpg'
+
+    img.mv(path.resolve(path.resolve(), 'src', 'static', fileName))
+    await Patient.create({avatar: fileName, fullname, phone})
 
     return res.status(200).json({res: 'Добавлено'})
   } catch (error) {
@@ -114,7 +121,8 @@ export const searchPatient = async (
     const {fullname} = req.query
     const data = await Patient.find({
       fullname: new RegExp(`^${fullname}`, 'i'),
-    })
+    }).sort({fullname: 1})
+
     return res.status(200).json(data)
   } catch (error) {
     next(ApiError.badRequest(error.message))

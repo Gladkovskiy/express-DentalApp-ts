@@ -88,3 +88,20 @@ export const updateService = async (
     next(ApiError.badRequest(error.message))
   }
 }
+
+export const searchService = async (
+  req: TypedRequestQuery<{diagnos: string}>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {diagnos} = req.query
+    const data = await Service.find({
+      diagnos: new RegExp(`^${diagnos}`, 'i'),
+    }).sort({diagnos: 1})
+    console.log(data)
+    return res.status(200).json(data)
+  } catch (error) {
+    next(ApiError.badRequest(error.message))
+  }
+}

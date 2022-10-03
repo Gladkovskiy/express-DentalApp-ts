@@ -8,12 +8,6 @@ const validation = () =>
         errorMessage: 'ФИО обязательное поле',
       },
     },
-    avatar: {
-      in: ['body'],
-      notEmpty: {
-        errorMessage: 'Аватар обязательное поле',
-      },
-    },
     phone: {
       in: ['body'],
       notEmpty: {

@@ -4,6 +4,7 @@ import cors from 'cors'
 import fileUpload from 'express-fileupload'
 import router from './routes/index'
 import error from './middleware/ErrorHadling'
+import path from 'path'
 
 const app = express()
 const port = 5000
@@ -16,6 +17,9 @@ app.use(express.urlencoded({extended: false}))
 app.use(fileUpload({}))
 
 app.use('/api', router)
+
+// а в react добавляем в путь эту приставку
+app.use('/image', express.static(path.resolve(path.resolve(), './static')))
 
 // обработчик ошибок полдений Middleware
 app.use(error)
