@@ -99,12 +99,22 @@ export const updatePatient = async (
 ) => {
   try {
     const errors = validationResult(req)
+
     if (!errors.isEmpty()) {
       return next(ApiError.badRequest(errorMsg(errors)))
     }
 
-    const {_id, avatar, fullname, phone} = req.body
-    await Patient.findByIdAndUpdate(_id, {avatar, fullname, phone})
+    const {_id, fullname, phone} = req.body
+    if (req.files?.avatar) {
+      const img = req.files.avatar as UploadedFile
+      const fileName = uuidv4() + 'jpg'
+
+      img.mv(path.resolve(path.resolve(), 'src', 'static', fileName))
+
+      await Patient.findByIdAndUpdate(_id, {avatar: fileName, fullname, phone})
+    } else {
+      await Patient.findByIdAndUpdate(_id, {fullname, phone})
+    }
 
     return res.status(200).json({res: 'Изменено'})
   } catch (error) {

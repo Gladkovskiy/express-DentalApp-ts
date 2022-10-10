@@ -19,7 +19,7 @@ app.use(fileUpload({}))
 app.use('/api', router)
 
 // а в react добавляем в путь эту приставку
-app.use('/image', express.static(path.resolve(path.resolve(), './static')))
+app.use('/image', express.static(path.resolve(path.resolve(), './dist/static')))
 
 // обработчик ошибок полдений Middleware
 app.use(error)
