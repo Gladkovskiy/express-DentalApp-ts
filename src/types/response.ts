@@ -25,6 +25,7 @@ interface IData {
   time: string
   patient: IFindPatient
   service: IFindService
+  _id: string
 }
 
 export interface ISortAppoinments {

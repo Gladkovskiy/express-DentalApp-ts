@@ -55,7 +55,7 @@ export const getAppointments = async (
     const sortedData: ISortAppoinments[] = arrDate.map(date => ({
       title: date,
       data: data.reduce(
-        (app, {date: timeApp, patient, service, dentNumber}) => {
+        (app, {date: timeApp, patient, service, dentNumber, _id}) => {
           if (date === new Date(timeApp).toLocaleDateString()) {
             const tempTime = new Date(timeApp).toLocaleTimeString().split(':')
             const time = [tempTime[0], tempTime[1]].join(':')
@@ -67,6 +67,7 @@ export const getAppointments = async (
                 patient,
                 service,
                 dentNumber,
+                _id,
               },
             ]
           }
