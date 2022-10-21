@@ -16,3 +16,9 @@ appointment
 - date: string
 - patient_id
 - diagnos_id
+
+login
+- id
+- login: string
+- password: string
+- role: string

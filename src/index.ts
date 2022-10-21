@@ -5,9 +5,12 @@ import fileUpload from 'express-fileupload'
 import router from './routes/index'
 import error from './middleware/ErrorHadling'
 import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const app = express()
-const port = 5000
+const port = process.env.PORT
 
 // для распознавания json в  запросе
 app.use(cors())
