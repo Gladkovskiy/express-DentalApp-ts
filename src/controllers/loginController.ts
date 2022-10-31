@@ -47,18 +47,16 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    const {login, password} = req.body
+    const {password} = req.body
 
-    const user = await Login.findOne<ILogin>({login})
-    if (!user)
-      return next(ApiError.badRequest('Пользователь с таким именем не найден'))
+    const users = await Login.find<ILogin>()
+    const user = users.find(user => bcrypt.compareSync(password, user.password))
 
-    const comparePassword = bcrypt.compareSync(password, user.password)
-    if (!comparePassword) return next(ApiError.badRequest('Неверный пароль'))
+    if (!user) return next(ApiError.badRequest('Неверный PIN'))
 
     const jwtToken = jwtCreate(String(user._id), user.login, user.role)
 
-    res.status(200).json({toke: jwtToken})
+    res.status(200).json({token: jwtToken})
   } catch (error) {
     next(ApiError.internal(error.message))
   }
